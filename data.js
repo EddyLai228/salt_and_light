@@ -269,33 +269,48 @@ const defaultPosts = [
     id: 1,
     title: "推薦一種很棒的早晨習慣",
     content: "最近開始每天早上花五分鐘讀一段有智慧的文字☀️\n\n做法很簡單：\n1. 起床後先安靜一分鐘\n2. 讀一小段文章或句子\n3. 想想這句話跟今天有什麼關聯\n4. 帶著這句話出門\n\n聖經裡有很多充滿智慧的話，就算你不是基督徒，也會覺得很有收穫。推薦從「箴言」開始讀，每天一章剛好一個月！",
-    author: "匿名",
+    author: "早起的鳥兒",
     category: "好文推薦",
-    timestamp: new Date("2026-03-12").getTime()
+    timestamp: new Date("2026-03-12").getTime(),
+    likes: 12,
+    comments: [
+      { author: "訪客", content: "真的很有用！推薦+1", timestamp: new Date("2026-03-12T10:30:00").getTime() }
+    ]
   },
   {
     id: 2,
     title: "大學壓力大的時候怎麼辦？",
     content: "期中考那陣子真的壓力爆大😩\n\n後來學到一個方法：把擔心的事情一條條寫下來，然後想想哪些是你能控制的、哪些不能。不能控制的就放手。\n\n聖經裡有一句話讓我很有感：「應當一無掛慮，只要凡事藉著禱告，將你們所要的告訴神。」意思是放下那些你扛不動的重擔。\n\n如果你也正在壓力中，歡迎來聊聊 💪",
-    author: "匿名",
+    author: "一起加油",
     category: "心情分享",
-    timestamp: new Date("2026-03-13").getTime()
+    timestamp: new Date("2026-03-13").getTime(),
+    likes: 25,
+    comments: [
+      { author: "路人甲", content: "這句經文我也很喜歡", timestamp: new Date("2026-03-13T14:20:00").getTime() }
+    ]
   },
   {
     id: 3,
     title: "好玩的聚會破冰遊戲推薦",
     content: "最近辦了幾場聚會，試了不同的破冰遊戲，效果超好：\n\n✅ 5人以下：誰是臥底、心臟病\n✅ 5-10人：蘿蔔蹲、猜猜我是誰\n✅ 10人以上：支援前線、比手畫腳\n\n每個遊戲在本站的「破冰遊戲」區都有完整規則，歡迎取用！不管是社團、系活動、朋友聚會都很適合～",
-    author: "匿名",
+    author: "派對達人",
     category: "資源推薦",
-    timestamp: new Date("2026-03-14").getTime()
+    timestamp: new Date("2026-03-14").getTime(),
+    likes: 8,
+    comments: []
   },
   {
     id: 4,
     title: "我是怎麼在大學找到方向的",
     content: "大一時超級迷惘，不知道讀這個科系到底對不對。每天都很焦慮。\n\n後來有個朋友邀我去一個聚會，那裡的人都很友善，讓我感覺被接納。慢慢地我開始認識基督信仰，讀到一句話：「我知道我向你們所懷的意念是賜平安的意念，不是降災禍的意念，要叫你們末後有指望。」\n\n那一刻我突然覺得，也許有人比我更了解我的人生。\n\n現在我不一定什麼都想通了，但至少不再焦慮。如果你也在迷惘中，歡迎來聊。這裡每個人都走過類似的路 🙂",
-    author: "匿名",
+    author: "走過來的人",
     category: "生活故事",
-    timestamp: new Date("2026-03-14").getTime()
+    timestamp: new Date("2026-03-14").getTime(),
+    likes: 42,
+    comments: [
+      { author: "迷惘的大二生", content: "謝謝你的分享，覺得被安慰到了", timestamp: new Date("2026-03-14T20:10:00").getTime() },
+      { author: "走過來的人", content: "加油！慢慢來，不用急", timestamp: new Date("2026-03-14T21:05:00").getTime() }
+    ]
   }
 ];
 

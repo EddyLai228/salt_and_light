@@ -278,6 +278,32 @@ a { color: inherit; text-decoration: none; }
 .post-delete { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; font-family: inherit; padding: 4px 8px; border-radius: 4px; transition: all var(--transition); }
 .post-delete:hover { color: #DC2626; background: rgba(239,68,68,0.06); }
 
+/* ── Post Actions (Like & Comment) ── */
+.post-actions { display: flex; gap: 16px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+.btn-action {
+  background: none; border: none; font-family: inherit; font-size: 0.9rem; color: var(--text-light);
+  cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 6px;
+  transition: all var(--transition);
+}
+.btn-action:hover { background: rgba(0,0,0,0.04); color: var(--primary); }
+.btn-action.liked { color: #E11D48; }
+.btn-action.liked:hover { background: rgba(225, 29, 72, 0.08); }
+.action-count { font-weight: 500; font-size: 0.85rem; }
+
+/* ── Comments Section ── */
+.post-comments-section { margin-top: 12px; display: none; padding-top: 12px; border-top: 1px dashed var(--border); }
+.post-comments-section.open { display: block; animation: slideDown 0.3s ease; }
+.comment-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.comment-item { background: var(--bg); padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; }
+.comment-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem; color: var(--text-muted); }
+.comment-author { font-weight: 600; color: var(--text); }
+.comment-form { display: flex; gap: 8px; }
+.comment-input { flex: 1; padding: 8px 12px; border: 1px solid var(--border); border-radius: 20px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+.comment-input:focus { border-color: var(--primary-light); }
+.btn-comment-submit { background: var(--primary); color: white; border: none; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
+.btn-comment-submit:hover { background: var(--primary-dark); }
+.btn-comment-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
 /* ── About ── */
 .about-content { display: grid; gap: 20px; margin-bottom: 60px; }
 .about-card { background: var(--bg-card); border-radius: var(--radius); padding: 28px 32px; box-shadow: var(--shadow); }

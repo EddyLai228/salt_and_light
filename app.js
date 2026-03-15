@@ -77,6 +77,7 @@
   let customGames = [];
   let customSongs = [];
   let customPosts = [];
+  let serverPostUpdates = {}; // Store updates (likes/comments) for default posts
   let allGames = [...games, ...customGames];
   let allSongs = [...songs, ...customSongs];
   let allPosts = [...defaultPosts, ...customPosts];
@@ -85,7 +86,19 @@
   function rebuildCollections() {
     allGames = [...games, ...customGames];
     allSongs = [...songs, ...customSongs];
-    allPosts = [...defaultPosts, ...customPosts];
+    // Merge default posts with server updates
+    const mergedDefaultPosts = defaultPosts.map(p => {
+        const update = serverPostUpdates[String(p.id)];
+        if (update) {
+            return { 
+                ...p, 
+                likes: (update.likes !== undefined) ? update.likes : p.likes,
+                comments: (update.comments !== undefined) ? update.comments : p.comments
+            };
+        }
+        return p;
+    });
+    allPosts = [...mergedDefaultPosts, ...customPosts];
   }
 
   function hasFirebaseConfig(config) {
@@ -155,16 +168,31 @@
         };
       });
 
-      customPosts = postsSnap.docs.map((doc) => {
+      customPosts = []; 
+      serverPostUpdates = {}; // Clear old updates
+      const defaultPostIds = new Set(defaultPosts.map(p => String(p.id)));
+
+      postsSnap.docs.forEach((doc) => {
         const data = doc.data() || {};
-        return {
-          id: doc.id,
+        const id = doc.id;
+        const postData = {
+          id: id,
           title: data.title || "",
           content: data.content || "",
           author: data.author || "匿名",
           category: data.category || "心情分享",
-          timestamp: data.timestamp || Date.now()
+          timestamp: data.timestamp || Date.now(),
+          likes: Number(data.likes) || 0,
+          comments: Array.isArray(data.comments) ? data.comments : []
         };
+
+        if (defaultPostIds.has(id)) {
+            // Update for default post
+            serverPostUpdates[id] = { likes: postData.likes, comments: postData.comments };
+        } else {
+            // New custom post
+            customPosts.push(postData);
+        }
       });
 
       rebuildCollections();
@@ -421,6 +449,9 @@
       .join("");
   }
 
+  const openCommentSections = new Set();
+
+
   function renderPosts() {
     const list = document.getElementById("postsList");
     let filtered = currentForumCategory === "所有" ? allPosts : allPosts.filter((p) => p.category === currentForumCategory);
@@ -429,20 +460,190 @@
       list.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><p>還沒有分享，來當第一個吧！</p></div>`;
       return;
     }
-    list.innerHTML = filtered.map((p) => `
-      <div class="post-card animate-in">
+    list.innerHTML = filtered.map((p) => {
+      const isLiked = localStorage.getItem(`liked_${p.id}`);
+      const isOpen = openCommentSections.has(String(p.id));
+      const commentsHtml = (p.comments || []).map(c => `
+        <div class="comment-item">
+          <div class="comment-header">
+            <span class="comment-author">${escapeHtml(c.author)}</span>
+            <span>${formatTime(c.timestamp)}</span>
+          </div>
+          <div>${escapeHtml(c.content)}</div>
+        </div>
+      `).join("");
+
+      return `
+      <div class="post-card animate-in" data-id="${p.id}">
         <div class="post-header">
           <span class="post-title">${escapeHtml(p.title)}</span>
           <span class="post-category-badge ${p.category}">${escapeHtml(p.category)}</span>
         </div>
-        <div class="post-content">${escapeHtml(p.content)}</div>
-        <div class="post-footer">
+        <div class="post-content">${escapeHtml(p.content.replace(/\n/g, '<br>'))}</div>
+        
+        <div class="post-actions">
+          <button class="btn-action btn-like ${isLiked ? 'liked' : ''}" onclick="toggleLike('${p.id}')">
+            <span>${isLiked ? '❤️' : '🤍'}</span>
+            <span class="action-count">${p.likes || 0}</span>
+          </button>
+          <button class="btn-action btn-comment-toggle" onclick="toggleComments('${p.id}')">
+            <span>💬</span>
+            <span class="action-count">${(p.comments || []).length}</span>
+          </button>
+        </div>
+
+        <div class="post-comments-section ${isOpen ? 'open' : ''}" id="comments-${p.id}">
+          <div class="comment-list">
+            ${commentsHtml}
+          </div>
+          <form class="comment-form" onsubmit="submitComment(event, '${p.id}')">
+            <input type="text" class="comment-input" placeholder="寫下你的回應..." required>
+            <button type="submit" class="btn-comment-submit">送出</button>
+          </form>
+        </div>
+
+        <div class="post-footer" style="border-top:none; margin-top:0; padding-top:8px;">
           <span><span class="post-author">${escapeHtml(p.author || "匿名")}</span> ・${formatTime(p.timestamp)}</span>
           ${typeof p.id === 'string' ? `<button class="post-delete" data-post-id="${p.id}">刪除</button>` : ''}
         </div>
-      </div>`).join("");
+      </div>`;
+    }).join("");
+    
     observeAnimations();
   }
+  
+  // Make functions available globally for onclick handlers
+  window.toggleLike = async function(postId) {
+    const isLiked = localStorage.getItem(`liked_${postId}`);
+    const post = allPosts.find((p) => String(p.id) === String(postId));
+    if (!post) return;
+
+    if (isLiked) {
+      // Unlike
+      post.likes = Math.max(0, (post.likes || 0) - 1);
+      localStorage.removeItem(`liked_${postId}`);
+    } else {
+      // Like
+      post.likes = (post.likes || 0) + 1;
+      localStorage.setItem(`liked_${postId}`, "true");
+    }
+    
+    // Update DOM directly instead of re-rendering
+    const card = document.querySelector(`.post-card[data-id="${postId}"]`);
+    if (card) {
+        const btn = card.querySelector('.btn-like');
+        if (btn) {
+           const countSpan = btn.querySelector('.action-count');
+           const heartSpan = btn.querySelector('span:first-child');
+           
+           // Note: isLiked is the state BEFORE the toggle
+           if (isLiked) {
+               btn.classList.remove('liked');
+               heartSpan.textContent = '🤍';
+           } else {
+               btn.classList.add('liked');
+               heartSpan.textContent = '❤️';
+           }
+           countSpan.textContent = post.likes || 0;
+        }
+    }
+
+    try {
+      const db = await initFirebase();
+      if (!db) return;
+
+      const increment = window.firebase.firestore.FieldValue.increment(isLiked ? -1 : 1);
+      
+      // Use set with merge to create doc if it doesn't exist (important for default posts)
+      await db.collection(POSTS_COLLECTION).doc(String(postId)).set(
+        { likes: increment },
+        { merge: true }
+      );
+    } catch (e) {
+      console.error("Failed to update like", e);
+      // Revert UI on error
+      if (isLiked) {
+        post.likes++;
+        localStorage.setItem(`liked_${postId}`, "true");
+      } else {
+        post.likes--;
+        localStorage.removeItem(`liked_${postId}`);
+      }
+      renderPosts();
+      showToast("按讚失敗，請稍後再試");
+    }
+  };
+
+  window.toggleComments = function(postId) {
+    const id = String(postId);
+    const el = document.getElementById(`comments-${id}`);
+    if (el) {
+        const isOpen = el.classList.toggle("open");
+        if (isOpen) openCommentSections.add(id);
+        else openCommentSections.delete(id);
+    }
+  };
+
+  window.submitComment = async function(e, postId) {
+    e.preventDefault();
+    const input = e.target.querySelector('input');
+    const content = input.value.trim();
+    if (!content) return;
+
+    const post = allPosts.find(p => String(p.id) === String(postId));
+    if (!post) return;
+
+    const newComment = {
+      author: "訪客", // Or prompts user name
+      content: content,
+      timestamp: Date.now()
+    };
+
+    // Optimistic update
+    if (!post.comments) post.comments = [];
+    post.comments.push(newComment);
+    input.value = "";
+    
+    // Direct DOM update instead of renderPosts()
+    const section = document.getElementById(`comments-${postId}`);
+    if (section) {
+        const commentList = section.querySelector('.comment-list');
+        const div = document.createElement("div");
+        div.className = "comment-item";
+        div.innerHTML = `
+          <div class="comment-header">
+            <span class="comment-author">${escapeHtml(newComment.author)}</span>
+            <span>${formatTime(newComment.timestamp)}</span>
+          </div>
+          <div>${escapeHtml(newComment.content)}</div>
+        `;
+        commentList.appendChild(div);
+        section.classList.add('open');
+        openCommentSections.add(String(postId));
+        
+        // Update count badge
+        const card = section.closest('.post-card');
+        const countSpan = card.querySelector('.btn-comment-toggle .action-count');
+        if (countSpan) countSpan.textContent = post.comments.length;
+    }
+
+    try {
+      const db = await initFirebase();
+      if (!db) return;
+
+      const commentUpdate = window.firebase.firestore.FieldValue.arrayUnion(newComment);
+      
+      // Use set with merge to create doc if doesn't exist
+      await db.collection(POSTS_COLLECTION).doc(String(postId)).set(
+        { comments: commentUpdate }, 
+        { merge: true }
+      );
+    } catch (e) {
+      console.error("Failed to add comment", e);
+      post.comments.pop(); 
+      showToast("留言儲存失敗");
+    }
+  };
 
   document.getElementById("forumTabs").addEventListener("click", (e) => {
     if (!e.target.classList.contains("tab-btn")) return;
