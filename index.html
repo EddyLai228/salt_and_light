@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鹽光青年 Salt & Light Youth</title>
+  <meta name="description" content="一個屬於年輕人的空間 — 每日好句、破冰遊戲、好聽音樂、自由分享">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ====== 導航列 ====== -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">鹽光青年</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="選單">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active" data-page="home">首頁</a></li>
+        <li><a href="#games" class="nav-link" data-page="games">破冰遊戲</a></li>
+        <li><a href="#worship" class="nav-link" data-page="worship">音樂</a></li>
+        <li><a href="#stories" class="nav-link" data-page="stories">聖經故事</a></li>
+        <li><a href="#forum" class="nav-link" data-page="forum">分享園地</a></li>
+        <li><a href="#about" class="nav-link" data-page="about">關於</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ====== 首頁 ====== -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">鹽光青年</h1>
+        <p class="hero-subtitle">Salt & Light Youth</p>
+        <p class="hero-verse">一個屬於年輕人的空間<br>在這裡，你可以找到好音樂、好遊戲、好朋友</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- 每日一句 -->
+      <div class="daily-verse-card">
+        <div class="verse-label">💡 今日一句</div>
+        <blockquote class="verse-text" id="dailyVerseText"></blockquote>
+        <cite class="verse-ref" id="dailyVerseRef"></cite>
+      </div>
+
+      <!-- 快速導覽 -->
+      <h2 class="section-title">開始探索</h2>
+      <div class="quick-links">
+        <a href="#games" class="quick-card" data-page="games">
+          <div class="quick-icon">🎮</div>
+          <h3>破冰遊戲</h3>
+          <p>聚會不冷場！按人數找遊戲</p>
+        </a>
+        <a href="#worship" class="quick-card" data-page="worship">
+          <div class="quick-icon">🎵</div>
+          <h3>好聽音樂</h3>
+          <p>快歌、慢歌、輕音樂，搜尋直接前往 YouTube</p>
+        </a>
+        <a href="#stories" class="quick-card" data-page="stories">
+          <div class="quick-icon">📖</div>
+          <h3>聖經故事</h3>
+          <p>關於醫治、神蹟、勇氣的生命故事</p>
+        </a>
+        <a href="#forum" class="quick-card" data-page="forum">
+          <div class="quick-icon">💬</div>
+          <h3>分享園地</h3>
+          <p>心情、故事、好文，自由分享</p>
+        </a>
+      </div>
+
+      <!-- 認識信仰 -->
+      <div class="gospel-section">
+        <h2 class="section-title">這些話，安靜讀一讀</h2>
+        <p class="section-subtitle">這些來自聖經的話，在世界各地安慰了無數人。不管你的信仰是什麼，也許其中有一句會觸動你。</p>
+        <div class="gospel-card">
+          <div class="gospel-step">
+            <div class="step-number">❤️</div>
+            <div class="step-content">
+              <h4>你是被愛的</h4>
+              <p>「神愛世人，甚至將他的獨生子賜給他們，叫一切信他的，不致滅亡，反得永生。」<br><span class="verse-src">— 約翰福音 3:16</span></p>
+            </div>
+          </div>
+          <div class="gospel-step">
+            <div class="step-number">🤝</div>
+            <div class="step-content">
+              <h4>你不需要完美</h4>
+              <p>「因為世人都犯了罪，虧缺了神的榮耀。」我們每個人都不完美，但這不代表你不值得被愛。<br><span class="verse-src">— 羅馬書 3:23</span></p>
+            </div>
+          </div>
+          <div class="gospel-step">
+            <div class="step-number">✨</div>
+            <div class="step-content">
+              <h4>有人願意為你付出一切</h4>
+              <p>「惟有基督在我們還作罪人的時候為我們死，神的愛就在此向我們顯明了。」即使你覺得自己不夠好，有一份愛願意接納你的全部。<br><span class="verse-src">— 羅馬書 5:8</span></p>
+            </div>
+          </div>
+          <div class="gospel-step">
+            <div class="step-number">🚪</div>
+            <div class="step-content">
+              <h4>這扇門隨時為你打開</h4>
+              <p>「看哪，我站在門外叩門，若有聽見我聲音就開門的，我要進到他那裡去。」你不需要做任何準備，只要願意打開心門。<br><span class="verse-src">— 啟示錄 3:20</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 破冰遊戲 ====== -->
+  <section id="games" class="page">
+    <div class="container">
+      <div class="page-header" style="position: relative;">
+        <h1>🎮 破冰遊戲</h1>
+        <p>不管是社團活動、朋友聚會，還是團契小組，按人數就能找到最適合的遊戲！</p>
+        <button id="showGameFormBtn" class="btn-primary" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: auto; padding: 10px 24px; border-radius: 50px; box-shadow: 0 4px 12px rgba(44,95,124,0.2);">➕ 新增遊戲</button>
+      </div>
+      <div class="filter-bar">
+        <span class="filter-label">人數：</span>
+        <div class="filter-buttons" id="playerFilter">
+          <button class="filter-btn active" data-filter="all">全部</button>
+          <button class="filter-btn" data-filter="small">2-5 人</button>
+          <button class="filter-btn" data-filter="medium">5-10 人</button>
+          <button class="filter-btn" data-filter="large">10-20 人</button>
+          <button class="filter-btn" data-filter="xlarge">20+ 人</button>
+        </div>
+      </div>
+
+      <div class="post-form-card" id="gameFormCard" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3 style="margin-bottom: 0;">➕ 新增遊戲</h3>
+          <button id="closeGameFormBtn" type="button" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-light); line-height: 1;">&times;</button>
+        </div>
+        <form id="gameAddForm">
+          <div class="form-row">
+            <input type="text" id="gameName" placeholder="遊戲名稱" maxlength="50" required>
+            <input type="text" id="gameCategory" placeholder="分類（如：合作、反應）" maxlength="20" required>
+          </div>
+          <textarea id="gameDescription" placeholder="遊戲簡介" rows="3" maxlength="300" required></textarea>
+          <div class="form-row">
+            <input type="number" id="gameMinPlayers" placeholder="最少人數" min="1" required>
+            <input type="number" id="gameMaxPlayers" placeholder="最多人數" min="1" required>
+          </div>
+          <div class="form-row">
+            <input type="text" id="gameDuration" placeholder="時間（如：15-20 分鐘）" maxlength="30" required>
+            <input type="text" id="gameMaterials" placeholder="所需材料（沒有可填：無）" maxlength="80" required>
+          </div>
+          <textarea id="gameRules" placeholder="規則（每行一條）" rows="4" maxlength="1000" required></textarea>
+          <button type="submit" class="btn-primary">新增遊戲</button>
+        </form>
+      </div>
+
+      <div class="games-grid" id="gamesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ====== 音樂 ====== -->
+  <section id="worship" class="page">
+    <div class="container">
+      <div class="page-header">
+        <h1>🎵 好聽音樂</h1>
+        <p>搜尋 YouTube 上的詩歌和音樂，點擊就能前往收聽</p>
+      </div>
+
+      <!-- YouTube 搜尋 -->
+      <div class="yt-section">
+        <form class="yt-search-bar" id="ytSearchForm" action="https://www.youtube.com/results" method="GET" target="_blank">
+          <input type="text" name="search_query" id="ytSearchInput" placeholder="搜尋任何歌曲、詩歌、音樂..." autocomplete="off" required>
+          <button type="submit" class="btn-yt-search">搜尋 YouTube</button>
+        </form>
+      </div>
+
+      <!-- 詩歌分類 -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 48px;">
+        <h2 class="section-title" style="margin-top: 0;">推薦歌單</h2>
+        <button id="showSongFormBtn" class="btn-primary" style="width: auto; padding: 10px 24px; border-radius: 50px; box-shadow: 0 4px 12px rgba(44,95,124,0.2);">➕ 新增詩歌</button>
+      </div>
+      <div class="tab-bar" id="songTabs">
+        <button class="tab-btn active" data-tab="all">全部</button>
+        <button class="tab-btn" data-tab="fast">🔥 快歌</button>
+        <button class="tab-btn" data-tab="slow">🕊️ 慢歌</button>
+        <button class="tab-btn" data-tab="light">🎹 輕音樂</button>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="songSearch" placeholder="搜尋歌名、歌手、標籤..." autocomplete="off">
+      </div>
+
+      <div class="post-form-card" id="songFormCard" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3 style="margin-bottom: 0;">➕ 新增詩歌</h3>
+          <button id="closeSongFormBtn" type="button" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-light); line-height: 1;">&times;</button>
+        </div>
+        <form id="songAddForm">
+          <div class="form-row">
+            <input type="text" id="songName" placeholder="歌名" maxlength="80" required>
+            <input type="text" id="songArtist" placeholder="歌手/團體" maxlength="80" required>
+          </div>
+          <div class="form-row">
+            <select id="songType" required>
+              <option value="fast">🔥 快歌</option>
+              <option value="slow">🕊️ 慢歌</option>
+              <option value="light">🎹 輕音樂</option>
+            </select>
+            <input type="url" id="songLink" placeholder="YouTube 連結（選填）">
+          </div>
+          <input type="text" id="songTags" placeholder="標籤（用逗號分隔，如：敬拜, 平安, 中文）" maxlength="120" required>
+          <textarea id="songChorus" placeholder="副歌/備註" rows="3" maxlength="300" required></textarea>
+          <button type="submit" class="btn-primary">新增詩歌</button>
+        </form>
+      </div>
+
+      <div class="songs-grid" id="songsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ====== 聖經故事 ====== -->
+  <section id="stories" class="page">
+    <div class="container">
+      <div class="page-header">
+        <h1>📖 聖經故事</h1>
+        <p>真實的生命故事，用最平易近人的方式說給你聽。不論你是否認識上帝，都能從中得到啟發與力量。</p>
+      </div>
+      
+      <div class="stories-grid" id="storiesGrid">
+        <!-- 故事將由 JS 動態載入 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 分享園地 ====== -->
+  <section id="forum" class="page">
+    <div class="container">
+      <div class="page-header" style="position: relative;">
+        <h1>💬 分享園地</h1>
+        <p>這是一個自由分享的空間 — 心情、故事、好文，什麼都可以聊</p>
+        <button id="showPostFormBtn" class="btn-primary" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: auto; padding: 10px 24px; border-radius: 50px; box-shadow: 0 4px 12px rgba(44,95,124,0.2);">✍️ 發表分享</button>
+      </div>
+
+      <div class="post-form-card" id="postFormCard" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3 style="margin-bottom: 0;">✍️ 發表分享</h3>
+          <button id="closePostFormBtn" type="button" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-light); line-height: 1;">&times;</button>
+        </div>
+        <form id="postForm">
+          <div class="form-row">
+            <input type="text" id="postAuthor" placeholder="你的暱稱（選填）" maxlength="20">
+            <select id="postCategory">
+              <option value="心情分享">心情分享</option>
+              <option value="生活故事">生活故事</option>
+              <option value="好文推薦">好文推薦</option>
+              <option value="資源推薦">資源推薦</option>
+            </select>
+          </div>
+          <input type="text" id="postTitle" placeholder="標題" maxlength="50" required>
+          <textarea id="postContent" placeholder="說說你的想法..." rows="4" maxlength="1000" required></textarea>
+          <button type="submit" class="btn-primary">發表</button>
+        </form>
+      </div>
+      <div class="tab-bar" id="forumTabs"></div>
+      <div class="posts-list" id="postsList"></div>
+    </div>
+  </section>
+
+  <!-- ====== 關於 ====== -->
+  <section id="about" class="page">
+    <div class="container">
+      <div class="page-header">
+        <h1>關於鹽光青年</h1>
+        <p>認識這個平台</p>
+      </div>
+      <div class="about-content">
+        <div class="about-card">
+          <h3>🎯 為什麼做這個？</h3>
+          <p>
+            「鹽光青年」是一個給年輕人的資源分享平台。不管你是想找聚會遊戲、
+            好聽的音樂、還是一個可以說說話的地方，這裡都歡迎你。
+          </p>
+          <p>
+            名字來自聖經的一句話：「你們是世上的鹽，你們是世上的光。」
+            我們相信每個年輕人都有獨特的價值，都能為身邊的人帶來溫暖和光亮。
+          </p>
+        </div>
+        <div class="about-card">
+          <h3>👤 關於作者</h3>
+          <p>
+            嗨！我是一名國立陽明交通大學資訊工程系的學生，也是一名基督徒。
+            從國中開始參加學生團契，信仰一直是我生命中很重要的部分。
+          </p>
+          <p>
+            這個網站是我想結合所學技術和信仰的一個小嘗試。
+            不管你是不是基督徒，都歡迎你來這裡逛逛，說不定會在這裡遇到一些好東西
+          </p>
+        </div>
+        <div class="about-card">
+          <h3>🤖 AI 工具使用說明</h3>
+          <p>本作品在開發過程中使用了 AI 工具輔助：</p>
+          <ul>
+            <li><strong>工具：</strong>GitHub Copilot（Claude 模型）</li>
+            <li><strong>使用方式：</strong>把已經寫的網頁讓AI可以加入響應式設計，加入firebase資料庫</li>
+            <li><strong>Prompt 概述：</strong>「幫我根據我寫的網頁內容，加入響應式設計和css」，「幫我加入Firebase資料庫功能」</li>          
+          </ul>
+          <p>所有經文來自聖經，遊戲和音樂基於實際聚會經驗整理，AI 工具主要用於加速程式碼開發。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Footer ====== -->
+  <footer>
+    <div class="container">
+      <p class="footer-verse">
+        「你們的光也當這樣照在人前，叫他們看見你們的好行為，便將榮耀歸給你們在天上的父。」<br>
+        — 馬太福音 5:16
+      </p>
+      <p class="footer-copy">© 2026 鹽光青年 Salt & Light Youth</p>
+    </div>
+  </footer>
+
+  <button id="scrollTop" class="scroll-top-btn" aria-label="回到頂部">↑</button>
+
+  <script src="data.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
