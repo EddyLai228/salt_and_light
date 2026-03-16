@@ -92,7 +92,7 @@
         if (update) {
             return { 
                 ...p, 
-                likes: (update.likes !== undefined) ? update.likes : p.likes,
+                likes: Math.max(0, (update.likes !== undefined) ? update.likes : p.likes),
                 comments: (update.comments !== undefined) ? update.comments : p.comments
             };
         }
@@ -182,7 +182,7 @@
           author: data.author || "匿名",
           category: data.category || "心情分享",
           timestamp: data.timestamp || Date.now(),
-          likes: Number(data.likes) || 0,
+          likes: Math.max(0, Number(data.likes)) || 0,
           comments: Array.isArray(data.comments) ? data.comments : []
         };
 
@@ -484,7 +484,7 @@
         <div class="post-actions">
           <button class="btn-action btn-like ${isLiked ? 'liked' : ''}" onclick="toggleLike('${p.id}')">
             <span>${isLiked ? '❤️' : '🤍'}</span>
-            <span class="action-count">${p.likes || 0}</span>
+            <span class="action-count">${Math.max(0, p.likes || 0)}</span>
           </button>
           <button class="btn-action btn-comment-toggle" onclick="toggleComments('${p.id}')">
             <span>💬</span>
@@ -552,11 +552,11 @@
       const db = await initFirebase();
       if (!db) return;
 
-      const increment = window.firebase.firestore.FieldValue.increment(isLiked ? -1 : 1);
-      
       // Use set with merge to create doc if it doesn't exist (important for default posts)
+      // We send the absolute value to ensure we respect the default post's initial likes 
+      // and prevent negative numbers (since we clamped post.likes locally).
       await db.collection(POSTS_COLLECTION).doc(String(postId)).set(
-        { likes: increment },
+        { likes: post.likes },
         { merge: true }
       );
     } catch (e) {
